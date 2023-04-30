@@ -1,0 +1,319 @@
+MREAD:
+  Operation: 0b000000
+  Condition: 0b0000
+  Args:
+    Dest: Reg
+    Src: Reg
+    Offset: Imm
+
+MWRITE:
+  Operation: 0b000000
+  Condition: 0b0001
+  Args:
+    Dest: Reg
+    Src: Reg
+    Offset: Imm
+
+BIND:
+  Operation: 0b000000
+  Condition: 0b0010
+  Args:
+    Dest: Reg
+    Address: Imm  
+
+UNBIND:
+  Operation: 0b000000
+  Condition: 0b0011
+  Args:
+    Dest: Reg
+
+BRUH:
+  Operation: 0b000010
+  Condition: Label
+  Args:
+    Dest: Reg
+
+B:
+  Operation: 0b000011
+  Condition: Label
+  Args:
+    Dest: Imm
+
+ADD:
+  Operation: 0b000100
+  Condition: 0000
+  Args:
+    Dest: Reg
+    Addend: Reg
+    Addend2: Reg
+
+ADDI:
+  Operation: 0b000100
+  Condition: 0001
+  Args:
+    Dest: Reg
+    Addend: Reg
+    Addend_Imm: 8
+
+FX_ADD:
+  Operation: 0b000100
+  Condition: 1000
+  Args:
+    Dest: Reg
+    Addend: Reg
+    Addend2: Reg
+
+FX_ADDI:
+  Operation: 0b000100
+  Condition: 1001
+  Args:
+    Dest: Reg
+    Addend: Reg
+    Addend_Imm: 8
+
+SUB:
+  Operation: 0b000101
+  Condition: 0000
+  Args:
+    Dest: Reg
+    Subend: Reg
+    Subend2: Reg
+
+SUBI:
+  Operation: 0b000101
+  Condition: 0001
+  Args:
+    Dest: Reg
+    Subend: Reg
+    Subend_Imm: 8
+
+CMP:
+  Operation: 0b000101
+  Condition: 0010
+  Args:
+    Dest: Reg
+    Comparator: Reg
+    Comparator2: Reg
+
+CMPI:
+  Operation: 0b000101
+  Condition: 0011
+  Args:
+    Dest: Reg
+    Comparator: Reg
+    Comparator_Imm: 12
+
+FX_SUB:
+  Operation: 0b000101
+  Condition: 1000
+  Args:
+    Dest: Reg
+    Subend: Reg
+    Subend2: Reg
+
+FX_SUBI:
+  Operation: 0b000101
+  Condition: 1001
+  Args:
+    Dest: Reg
+    Subend: Reg
+    Subend_Imm: 8
+
+MUL:
+  Operation: 0b000110
+  Condition: 0000
+  Args:
+    Dest: Reg
+    Multiplier: Reg
+    Multiplier2: Reg
+
+MULI:
+  Operation: 0b000110
+  Condition: 0001
+  Args:
+    Dest: Reg
+    Multiplier: Reg
+    Multiplier_Imm: 8
+
+MADD:
+  Operation: 0b000110
+  Condition: 0100
+  Args:
+    Dest: Reg
+    Multiplier: Reg
+    Multiplier2: Reg
+
+FX_MUL:
+  Operation: 0b000110
+  Condition: 1000
+  Args:
+    Dest: Reg
+    Multiplier: Reg
+    Multiplier2: Reg
+
+FX_MULI:
+  Operation: 0b000110
+  Condition: 1001
+  Args:
+    Dest: Reg
+    Multiplier: Reg
+    Multiplier_Imm: 8
+
+FX_MADD:
+  Operation: 0b000110
+  Condition: 1100
+  Args:
+    Dest: Reg
+    Multiplier: Reg
+    Multiplier2: Reg
+
+DIV:
+  Operation: 0b000111
+  Condition: 0000
+  Args:
+    Dest: Reg
+    Divisor: Reg
+    Divisor2: Reg
+
+DIVI:
+  Operation: 0b000111
+  Condition: 0001
+  Args:
+    Dest: Reg
+    Divisor: Reg
+    Divisor_Imm: 8
+
+FX_DIV:
+  Operation: 0b000111
+  Condition: 1000
+  Args:
+    Dest: Reg
+    Divisor: Reg
+    Divisor2: Reg
+
+FX_DIVI:
+  Operation: 0b000111
+  Condition: 1001
+  Args:
+    Dest: Reg
+    Divisor: Reg
+    Divisor_Imm: 8
+
+AND:
+  Operation: 0b001000
+  Condition: 0000
+  Args:
+    Dest: Reg
+    Ander: Reg
+    Ander2: Reg
+
+ANDI:
+  Operation: 0b001000
+  Condition: 0001
+  Args:
+    Dest: Reg
+    Ander: Reg
+    Ander_Imm: 8
+
+NAND:
+  Operation: 0b001001
+  Condition: 0000
+  Args:
+    Dest: Reg
+    Nander: Reg
+    Nander2: Reg
+
+NANDI:
+  Operation: 0b001001
+  Condition: 0001
+  Args:
+    Dest: Reg
+    Nander: Reg
+    Nander_Imm: 8
+
+OR:
+  Operation: 0b001010
+  Condition: 0000
+  Args:
+    Dest: Reg
+    Orer: Reg
+    Orer2: Reg
+
+ORI:
+  Operation: 0b001010
+  Condition: 0001
+  Args:
+    Dest: Reg
+    Orer: Reg
+    Orer_Imm: 8
+
+XOR:
+  Operation: 0b001011
+  Condition: 0000
+  Args:
+    Dest: Reg
+    Xorer: Reg
+    Xorer2: Reg
+
+XORI:
+  Operation: 0b001011
+  Condition: 0001
+  Args:
+    Dest: Reg
+    Xorer: Reg
+    Xorer_Imm: 8
+
+LSL:
+  Operation: 0b001100
+  Condition: 0000
+  Args:
+    Dest: Reg
+    Shifter: Reg
+    Shifter2: Reg
+
+LSLI:
+  Operation: 0b001100
+  Condition: 0001
+  Args:
+    Dest: Reg
+    Shifter: Reg
+    Shifter_Imm: 8
+
+LSR:
+  Operation: 0b001100
+  Condition: 0010
+  Args:
+    Dest: Reg
+    Shifter: Reg
+    Shifter2: Reg
+
+LSRI:
+  Operation: 0b001100
+  Condition: 0011
+  Args:
+    Dest: Reg
+    Shifter: Reg
+    Shifter_Imm: 8
+
+RSR:
+  Operation: 0b001100
+  Condition: 0100
+  Args:
+    Dest: Reg
+    Shifter: Reg
+    Shifter2: Reg
+
+RSRI:
+  Operation: 0b001100
+  Condition: 0101
+  Args:
+    Dest: Reg
+    Shifter: Reg
+    Shifter_Imm: 8
+
+NOT:
+  Operation: 0b001111
+  Condition: 0000
+  Args:
+    Dest: Reg
+    Notter: Reg
