@@ -3,13 +3,14 @@ import sys
 
 class Tokenizer:
     @staticmethod
-    def Tokenize(Data, Opcodes : dict):
+    def Tokenize(Data, Opcodes : dict, Conditions):
         Head = None
         Curr = None
+        Labels = []
         LineNo = 1
         for Line in Data:
             try:
-                NewNode = Tokenizer.TokenizeLine(Line, Opcodes)
+                NewNode = Tokenizer.TokenizeLine(Line, Opcodes, Conditions, Labels)
                 if Head == None:
                     Head = NewNode
                 else:
@@ -23,7 +24,7 @@ class Tokenizer:
     
     @staticmethod
     # Naively tokenize string.
-    def TokenizeLine(String, Opcodes : dict):
+    def TokenizeLine(String, Opcodes : dict, Conditions, Labels):
         if len(String) == 0 or String == '\n':
             # Empty string; no tokens.
             return SyntaxComment()
@@ -36,14 +37,31 @@ class Tokenizer:
             return SyntaxComment()
         if PossibleTokens[0] == 'def':
             # Label.
+            Labels.append(PossibleTokens[1])
             return SyntaxLabel(PossibleTokens[1])
         
         # Likely a command. Try to parse it.     
         CommandNames = list(Opcodes.keys())
+
+        Op = None
+        CondCode = None
         
-        if PossibleTokens[0] not in CommandNames:
+        # Check if there is a condition code attached to it.
+        if '.' in PossibleTokens[0]:
+            NameSpl = PossibleTokens[0].split('.')
+            if len(NameSpl) != 2:
+                raise Exception(f'Condition code not specified.')
+            if NameSpl[0] not in CommandNames:
+                raise Exception(f'Command name "{NameSpl[0]}" is nonsense!')
+            if NameSpl[1] not in Conditions:
+                raise Exception(f'Condition code "{NameSpl[1]}" invalid.')
+            Op = NameSpl[0]
+            CondCode = Conditions.index(NameSpl[1])
+        elif PossibleTokens[0] not in CommandNames:
             raise Exception(f'Command name "{PossibleTokens[0]}" is nonsense!')
-        
+        else:
+            Op = PossibleTokens[0]
+        print(Op, CondCode)
         Parameters = []
         for Parameter in PossibleTokens[1:]:
             # Just for sanity.
@@ -72,14 +90,16 @@ class Tokenizer:
                     raise Exception(f'No idea what immediate "{ParameterNoComma}" is.')
                 Parameters.append(int(ParameterNoComma[1:]))
                 continue
+            elif ParameterNoComma in Labels:
+                continue
             # Erroneous parameter; raise exception.
             raise Exception(f'Parameter "{Parameter}" is nonsense!')
 
-        CommandData = Opcodes[PossibleTokens[0]]
+        CommandData = Opcodes[Op]
 
         ExpectedParameterCnt = len(CommandData['Args'])
         ActualParameterCnt = len(Parameters)
 
         if ActualParameterCnt != ExpectedParameterCnt:
             raise Exception(f'Expected {ExpectedParameterCnt} parameters, got {ActualParameterCnt}')
-        return SyntaxCommand(CommandData['Operation'], CommandData['Condition'], CommandData['Args'], Parameters)
+        return SyntaxCommand(CommandData['Operation'], CommandData['Condition'] if CondCode == None else CondCode, CommandData['Args'], Parameters)

@@ -6,3 +6,4 @@ def _start
     MREAD R1, R1, R1
     ADDI R2, R0, #3
     MREAD R3, R0, R4
+    B.GE _start

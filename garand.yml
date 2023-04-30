@@ -47,7 +47,7 @@ UNBIND:
 
 BRUH:
   Operation: 0b000010
-  Condition: Label
+  Condition: 0
   Args:
     Dest:
       BitSize: 6
@@ -55,7 +55,7 @@ BRUH:
 
 B:
   Operation: 0b000011
-  Condition: Label
+  Condition: 0
   Args:
     Dest:
       BitSize: 8
