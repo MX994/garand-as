@@ -34,4 +34,12 @@ class Command(IStructure):
             elif Typing == 'Imm':
                 ArgIdx -= System.ImmediateBits.value
                 CommandBase |= (self.Parameters[Idx] & (2**System.ImmediateBits.value - 1)) << ArgIdx
+            elif Typing.isnumeric():
+                try:
+                    ReqBits = int(Typing)
+                    ArgIdx -= ReqBits
+                    CommandBase |=  (self.Parameters[Idx] & (2**ReqBits - 1)) << ArgIdx
+                except Exception as e:
+                    print(f'One of your commands are malformed. The full error is below:\n{e}')                
+
         return pack('L', CommandBase)
