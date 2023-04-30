@@ -25,4 +25,5 @@ def main():
     LoweringHandler = Garand(ISADefs)
     LoweringHandler.LowerNodeList(Tokenizer.Tokenize(ProgLines, ISADefs))
     LoweringHandler.Serialize(args.output)
+    
 main()

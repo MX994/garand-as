@@ -2,318 +2,516 @@ MREAD:
   Operation: 0b000000
   Condition: 0b0000
   Args:
-    Dest: Reg
-    Src: Reg
-    Offset: Imm
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Src:
+      BitSize: 6
+      BitStart: 8
+    Offset:
+      BitSize: 8
+      BitStart: 2
 
 MWRITE:
   Operation: 0b000000
   Condition: 0b0001
   Args:
-    Dest: Reg
-    Src: Reg
-    Offset: Imm
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Src:
+      BitSize: 6
+      BitStart: 8
+    Offset:
+      BitSize: 8
+      BitStart: 2
 
 BIND:
   Operation: 0b000000
   Condition: 0b0010
   Args:
-    Dest: Reg
-    Address: Imm  
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Address:
+      BitSize: 8
+      BitStart: 0
 
 UNBIND:
   Operation: 0b000000
   Condition: 0b0011
   Args:
-    Dest: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
 
 BRUH:
   Operation: 0b000010
   Condition: Label
   Args:
-    Dest: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
 
 B:
   Operation: 0b000011
   Condition: Label
   Args:
-    Dest: Imm
+    Dest:
+      BitSize: 8
+      BitStart: 0
 
 ADD:
   Operation: 0b000100
   Condition: 0000
   Args:
-    Dest: Reg
-    Addend: Reg
-    Addend2: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Addend:
+      BitSize: 6
+      BitStart: 8
+    Addend2:
+      BitSize: 6
+      BitStart: 2
 
 ADDI:
   Operation: 0b000100
   Condition: 0001
   Args:
-    Dest: Reg
-    Addend: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Addend:
+      BitSize: 6
+      BitStart: 8
     Addend_Imm: 8
 
 FX_ADD:
   Operation: 0b000100
   Condition: 1000
   Args:
-    Dest: Reg
-    Addend: Reg
-    Addend2: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Addend:
+      BitSize: 6
+      BitStart: 8
+    Addend2:
+      BitSize: 6
+      BitStart: 2
 
 FX_ADDI:
   Operation: 0b000100
   Condition: 1001
   Args:
-    Dest: Reg
-    Addend: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Addend:
+      BitSize: 6
+      BitStart: 8
     Addend_Imm: 8
 
 SUB:
   Operation: 0b000101
   Condition: 0000
   Args:
-    Dest: Reg
-    Subend: Reg
-    Subend2: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Subend:
+      BitSize: 6
+      BitStart: 8
+    Subend2:
+      BitSize: 6
+      BitStart: 2
 
 SUBI:
   Operation: 0b000101
   Condition: 0001
   Args:
-    Dest: Reg
-    Subend: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Subend:
+      BitSize: 6
+      BitStart: 8
     Subend_Imm: 8
 
 CMP:
   Operation: 0b000101
   Condition: 0010
   Args:
-    Dest: Reg
-    Comparator: Reg
-    Comparator2: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Comparator:
+      BitSize: 6
+      BitStart: 8
+    Comparator2:
+      BitSize: 6
+      BitStart: 2
 
 CMPI:
   Operation: 0b000101
   Condition: 0011
   Args:
-    Dest: Reg
-    Comparator: Reg
-    Comparator_Imm: 12
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Comparator:
+      BitSize: 6
+      BitStart: 8
+    Comparator_Imm: 8
 
 FX_SUB:
   Operation: 0b000101
   Condition: 1000
   Args:
-    Dest: Reg
-    Subend: Reg
-    Subend2: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Subend:
+      BitSize: 6
+      BitStart: 8
+    Subend2:
+      BitSize: 6
+      BitStart: 2
 
 FX_SUBI:
   Operation: 0b000101
   Condition: 1001
   Args:
-    Dest: Reg
-    Subend: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Subend:
+      BitSize: 6
+      BitStart: 8
     Subend_Imm: 8
 
 MUL:
   Operation: 0b000110
   Condition: 0000
   Args:
-    Dest: Reg
-    Multiplier: Reg
-    Multiplier2: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Multiplier:
+      BitSize: 6
+      BitStart: 8
+    Multiplier2:
+      BitSize: 6
+      BitStart: 2
 
 MULI:
   Operation: 0b000110
   Condition: 0001
   Args:
-    Dest: Reg
-    Multiplier: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Multiplier:
+      BitSize: 6
+      BitStart: 8
     Multiplier_Imm: 8
 
 MADD:
   Operation: 0b000110
   Condition: 0100
   Args:
-    Dest: Reg
-    Multiplier: Reg
-    Multiplier2: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Multiplier:
+      BitSize: 6
+      BitStart: 8
+    Multiplier2:
+      BitSize: 6
+      BitStart: 2
 
 FX_MUL:
   Operation: 0b000110
   Condition: 1000
   Args:
-    Dest: Reg
-    Multiplier: Reg
-    Multiplier2: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Multiplier:
+      BitSize: 6
+      BitStart: 8
+    Multiplier2:
+      BitSize: 6
+      BitStart: 2
 
 FX_MULI:
   Operation: 0b000110
   Condition: 1001
   Args:
-    Dest: Reg
-    Multiplier: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Multiplier:
+      BitSize: 6
+      BitStart: 8
     Multiplier_Imm: 8
 
 FX_MADD:
   Operation: 0b000110
   Condition: 1100
   Args:
-    Dest: Reg
-    Multiplier: Reg
-    Multiplier2: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Multiplier:
+      BitSize: 6
+      BitStart: 8
+    Multiplier2:
+      BitSize: 6
+      BitStart: 2
 
 DIV:
   Operation: 0b000111
   Condition: 0000
   Args:
-    Dest: Reg
-    Divisor: Reg
-    Divisor2: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Divisor:
+      BitSize: 6
+      BitStart: 8
+    Divisor2:
+      BitSize: 6
+      BitStart: 2
 
 DIVI:
   Operation: 0b000111
   Condition: 0001
   Args:
-    Dest: Reg
-    Divisor: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Divisor:
+      BitSize: 6
+      BitStart: 8
     Divisor_Imm: 8
 
 FX_DIV:
   Operation: 0b000111
   Condition: 1000
   Args:
-    Dest: Reg
-    Divisor: Reg
-    Divisor2: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Divisor:
+      BitSize: 6
+      BitStart: 8
+    Divisor2:
+      BitSize: 6
+      BitStart: 2
 
 FX_DIVI:
   Operation: 0b000111
   Condition: 1001
   Args:
-    Dest: Reg
-    Divisor: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Divisor:
+      BitSize: 6
+      BitStart: 8
     Divisor_Imm: 8
 
 AND:
   Operation: 0b001000
   Condition: 0000
   Args:
-    Dest: Reg
-    Ander: Reg
-    Ander2: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Ander:
+      BitSize: 6
+      BitStart: 8
+    Ander2:
+      BitSize: 6
+      BitStart: 2
 
 ANDI:
   Operation: 0b001000
   Condition: 0001
   Args:
-    Dest: Reg
-    Ander: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Ander:
+      BitSize: 6
+      BitStart: 8
     Ander_Imm: 8
 
 NAND:
   Operation: 0b001001
   Condition: 0000
   Args:
-    Dest: Reg
-    Nander: Reg
-    Nander2: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Nander:
+      BitSize: 6
+      BitStart: 8
+    Nander2:
+      BitSize: 6
+      BitStart: 2
 
 NANDI:
   Operation: 0b001001
   Condition: 0001
   Args:
-    Dest: Reg
-    Nander: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Nander:
+      BitSize: 6
+      BitStart: 8
     Nander_Imm: 8
 
 OR:
   Operation: 0b001010
   Condition: 0000
   Args:
-    Dest: Reg
-    Orer: Reg
-    Orer2: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Orer:
+      BitSize: 6
+      BitStart: 8
+    Orer2:
+      BitSize: 6
+      BitStart: 2
 
 ORI:
   Operation: 0b001010
   Condition: 0001
   Args:
-    Dest: Reg
-    Orer: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Orer:
+      BitSize: 6
+      BitStart: 8
     Orer_Imm: 8
 
 XOR:
   Operation: 0b001011
   Condition: 0000
   Args:
-    Dest: Reg
-    Xorer: Reg
-    Xorer2: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Xorer:
+      BitSize: 6
+      BitStart: 8
+    Xorer2:
+      BitSize: 6
+      BitStart: 2
 
 XORI:
   Operation: 0b001011
   Condition: 0001
   Args:
-    Dest: Reg
-    Xorer: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Xorer:
+      BitSize: 6
+      BitStart: 8
     Xorer_Imm: 8
 
 LSL:
   Operation: 0b001100
   Condition: 0000
   Args:
-    Dest: Reg
-    Shifter: Reg
-    Shifter2: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Shifter:
+      BitSize: 6
+      BitStart: 8
+    Shifter2:
+      BitSize: 6
+      BitStart: 2
 
 LSLI:
   Operation: 0b001100
   Condition: 0001
   Args:
-    Dest: Reg
-    Shifter: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Shifter:
+      BitSize: 6
+      BitStart: 8
     Shifter_Imm: 8
 
 LSR:
   Operation: 0b001100
   Condition: 0010
   Args:
-    Dest: Reg
-    Shifter: Reg
-    Shifter2: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Shifter:
+      BitSize: 6
+      BitStart: 8
+    Shifter2:
+      BitSize: 6
+      BitStart: 2
 
 LSRI:
   Operation: 0b001100
   Condition: 0011
   Args:
-    Dest: Reg
-    Shifter: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Shifter:
+      BitSize: 6
+      BitStart: 8
     Shifter_Imm: 8
 
 RSR:
   Operation: 0b001100
   Condition: 0100
   Args:
-    Dest: Reg
-    Shifter: Reg
-    Shifter2: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Shifter:
+      BitSize: 6
+      BitStart: 8
+    Shifter2:
+      BitSize: 6
+      BitStart: 2
 
 RSRI:
   Operation: 0b001100
   Condition: 0101
   Args:
-    Dest: Reg
-    Shifter: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Shifter:
+      BitSize: 6
+      BitStart: 8
     Shifter_Imm: 8
 
 NOT:
   Operation: 0b001111
   Condition: 0000
   Args:
-    Dest: Reg
-    Notter: Reg
+    Dest:
+      BitSize: 6
+      BitStart: 14
+    Notter:
+      BitSize: 6
+      BitStart: 8

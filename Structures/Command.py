@@ -24,22 +24,16 @@ class Command(IStructure):
     
     def Serialize(self):
         CommandBase = ((self.Condition & 0b1111) << 28) | ((self.Operation & 0b111111) << 22)
-        ArgIdx = 22
-        for Name in self.Types:
-            Idx = list(self.Types.keys()).index(Name)
-            Typing = self.Types[Name]
-            if Typing == 'Reg':
-                ArgIdx -= System.RegisterBits.value
-                CommandBase |= (self.Parameters[Idx] & (2**System.RegisterBits.value - 1)) << ArgIdx
-            elif Typing == 'Imm':
-                ArgIdx -= System.ImmediateBits.value
-                CommandBase |= (self.Parameters[Idx] & (2**System.ImmediateBits.value - 1)) << ArgIdx
-            elif Typing.isnumeric():
-                try:
-                    ReqBits = int(Typing)
-                    ArgIdx -= ReqBits
-                    CommandBase |=  (self.Parameters[Idx] & (2**ReqBits - 1)) << ArgIdx
-                except Exception as e:
-                    print(f'One of your commands are malformed. The full error is below:\n{e}')                
-
+        LastBitStart = 22
+        for Index in range(len(self.Types)):
+            Typing = self.Types[list(self.Types.keys())[Index]]
+            if not str(Typing).isnumeric():
+                MaskedVal = self.Parameters[Index] & 2**Typing['BitSize'] - 1
+                CommandBase |= MaskedVal << Typing['BitStart']
+                LastBitStart = Typing['BitStart']
+            else:
+                LastBitStart -= Typing
+                MaskedVal = self.Parameters[Index] & (2**Typing - 1)
+                CommandBase |= MaskedVal << LastBitStart
+        print(pack('L', CommandBase))
         return pack('L', CommandBase)

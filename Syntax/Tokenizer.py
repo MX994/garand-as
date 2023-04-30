@@ -82,5 +82,4 @@ class Tokenizer:
 
         if ActualParameterCnt != ExpectedParameterCnt:
             raise Exception(f'Expected {ExpectedParameterCnt} parameters, got {ActualParameterCnt}')
-
         return SyntaxCommand(CommandData['Operation'], CommandData['Condition'], CommandData['Args'], Parameters)

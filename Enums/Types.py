@@ -2,8 +2,6 @@ from enum import Enum
 
 class System(Enum):
     IORegFlag = 0b10000
-    RegisterBits = 6
-    ImmediateBits = 10
     WORD_SIZE = 4
 
 class Node(Enum):
