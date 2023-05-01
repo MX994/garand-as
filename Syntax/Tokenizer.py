@@ -39,6 +39,8 @@ class Tokenizer:
             return SyntaxComment()
         if PossibleTokens[0] == 'def':
             # Label.
+            if PossibleTokens[1] in Map.keys():
+                raise Exception(f'Label "{PossibleTokens[1]}" already defined!')
             Node = SyntaxLabel(PossibleTokens[1])
             Labels.append(Node.GetData())
             Map[Node.GetData().GetName()] = Offset[0]
@@ -95,8 +97,10 @@ class Tokenizer:
                 Parameters.append(int(ParameterNoComma[1:]))
                 continue
             elif any(map(lambda x: x.GetName() == ParameterNoComma, Labels)):
-                Parameters.append(Map[ParameterNoComma])
-                print(Map[ParameterNoComma])
+                if Op == 'B':
+                    Parameters.append(Map[ParameterNoComma])
+                elif Op == 'BRUH':
+                    Parameters.append(Map[ParameterNoComma] - Offset[0])
                 continue
             # Erroneous parameter; raise exception.
             raise Exception(f'Parameter "{Parameter}" is nonsense!')
