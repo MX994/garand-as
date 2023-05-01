@@ -9,6 +9,7 @@ class Node(Enum):
     Comment = 1
     Command = 2
     Empty = 3
+    Raw = 4
 
 class GPRegisters(Enum):
     R0 = 0

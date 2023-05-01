@@ -7,5 +7,10 @@ def _start2
     MREAD R1, R1, R1
     ADDI R2, R0, #3
     MREAD R3, R0, R4
-    BRUH.GE _start
-    BRUH.GE _start2
+    .word 0xCAFEBABE
+    BRUH.GE R0
+    .word 0xCAFEBABE
+    B.GE _start2
+    .byte 0xFF
+    .byte 0xFE
+    .hword 0xDEAD

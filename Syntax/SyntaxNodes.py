@@ -3,6 +3,7 @@ from Enums.Types import Node
 from Structures.Command import *
 from Structures.Label import *
 from Structures.Comment import *
+from Structures.Raw import *
 
 class SyntaxCommand(INode):
     def __init__(self, Operation, Condition, Args, Parameters):
@@ -15,3 +16,7 @@ class SyntaxComment(INode):
 class SyntaxLabel(INode):
     def __init__(self, Name):
         super().__init__(Node.Label, Label(Name))
+
+class SyntaxRaw(INode):
+    def __init__(self, Bytes):
+        super().__init__(Node.Raw, Raw(Bytes))

@@ -1,4 +1,5 @@
 from Syntax.SyntaxNodes import *
+from struct import pack
 import sys
 
 class Tokenizer:
@@ -45,7 +46,33 @@ class Tokenizer:
             Labels.append(Node.GetData())
             Map[Node.GetData().GetName()] = Offset[0]
             return SyntaxLabel(PossibleTokens[1])
-        
+        if PossibleTokens[0] == '.byte':
+            # Raw byte
+            if PossibleTokens[1][1:].isnumeric():
+                # Immediate syntax
+                return SyntaxRaw(pack('B', int(PossibleTokens[1][1:])))
+            elif PossibleTokens[1][0:2] == '0x':
+                # hex
+                return SyntaxRaw(pack('B', int(PossibleTokens[1], 16)))
+            raise Exception('Invalid literal for raw directive.')
+        if PossibleTokens[0] == '.hword':
+            # Raw byte
+            if PossibleTokens[1][1:].isnumeric():
+                # Immediate syntax
+                return SyntaxRaw(pack('H', int(PossibleTokens[1][1:])))
+            elif PossibleTokens[1][0:2] == '0x':
+                # hex
+                return SyntaxRaw(pack('H', int(PossibleTokens[1], 16)))
+            raise Exception('Invalid literal for raw directive.')
+        if PossibleTokens[0] == '.word':
+            # Raw byte
+            if PossibleTokens[1][1:].isnumeric():
+                # Immediate syntax
+                return SyntaxRaw(pack('L', int(PossibleTokens[1][1:])))
+            elif PossibleTokens[1][0:2] == '0x':
+                # hex
+                return SyntaxRaw(pack('L', int(PossibleTokens[1], 16)))
+            raise Exception('Invalid literal for raw directive.')
         # Likely a command. Try to parse it.     
         CommandNames = list(Opcodes.keys())
 

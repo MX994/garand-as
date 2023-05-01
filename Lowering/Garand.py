@@ -6,7 +6,6 @@ class Garand:
     def __init__(self, Defs):
         self.Offset = 0
         self.Buffer = b''
-        self.LabelMap = {}
         self.Defs = Defs
         return
     
@@ -16,10 +15,13 @@ class Garand:
                 # This is ignored, and doesn't have a lowering representation.
                 ...
             case Node.Label:
-                self.LabelMap[Curr.GetData().GetName()] = self.Offset
+                # Handled in a higher level.
+                ...
             case Node.Command:
                 # Serialize command.
                 self.Buffer += Curr.GetData().Serialize()
+            case Node.Raw:
+                self.Buffer += Curr.GetData().GetBytes()
         return
     
     def LowerNodeList(self, Head : INode):
@@ -29,8 +31,12 @@ class Garand:
             # Lower current node.
             self.LowerNode(Curr)
             # Prepare for next iteration.
+            match Curr.GetKind():
+                case Node.Raw:
+                    self.Offset += len(Curr.GetData().GetBytes())
+                case _:
+                    self.Offset += 4
             Curr = Curr.GetNext()
-            self.Offset += 4
         return
     
     def Serialize(self, BinaryPath):
