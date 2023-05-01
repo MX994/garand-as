@@ -2,8 +2,10 @@
 
 def _start
     ADDI R0, R0, #255
+def _start2
     XOR R1, R1, R1 
     MREAD R1, R1, R1
     ADDI R2, R0, #3
     MREAD R3, R0, R4
-    B.GE _start
+    BRUH.GE _start
+    BRUH.GE _start2
