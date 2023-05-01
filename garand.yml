@@ -63,7 +63,7 @@ B:
 
 ADD:
   Operation: 0b000100
-  Condition: 0000
+  Condition: 0b0000
   Args:
     Dest:
       BitSize: 6
@@ -77,7 +77,7 @@ ADD:
 
 ADDI:
   Operation: 0b000100
-  Condition: 0001
+  Condition: 0b0001
   Args:
     Dest:
       BitSize: 6
@@ -115,7 +115,7 @@ FX_ADDI:
 
 SUB:
   Operation: 0b000101
-  Condition: 0000
+  Condition: 0b0000
   Args:
     Dest:
       BitSize: 6
@@ -129,7 +129,7 @@ SUB:
 
 SUBI:
   Operation: 0b000101
-  Condition: 0001
+  Condition: 0b0001
   Args:
     Dest:
       BitSize: 6
@@ -141,7 +141,7 @@ SUBI:
 
 CMP:
   Operation: 0b000101
-  Condition: 0010
+  Condition: 0b0010
   Args:
     Dest:
       BitSize: 6
@@ -149,21 +149,15 @@ CMP:
     Comparator:
       BitSize: 6
       BitStart: 8
-    Comparator2:
-      BitSize: 6
-      BitStart: 2
 
 CMPI:
   Operation: 0b000101
-  Condition: 0011
+  Condition: 0b0011
   Args:
     Dest:
       BitSize: 6
       BitStart: 14
-    Comparator:
-      BitSize: 6
-      BitStart: 8
-    Comparator_Imm: 8
+    Comparator_Imm: 12
 
 FX_SUB:
   Operation: 0b000101
@@ -193,7 +187,7 @@ FX_SUBI:
 
 MUL:
   Operation: 0b000110
-  Condition: 0000
+  Condition: 0b0000
   Args:
     Dest:
       BitSize: 6
@@ -207,7 +201,7 @@ MUL:
 
 MULI:
   Operation: 0b000110
-  Condition: 0001
+  Condition: 0b0001
   Args:
     Dest:
       BitSize: 6
@@ -219,7 +213,7 @@ MULI:
 
 MADD:
   Operation: 0b000110
-  Condition: 0100
+  Condition: 0b0100
   Args:
     Dest:
       BitSize: 6
@@ -273,7 +267,7 @@ FX_MADD:
 
 DIV:
   Operation: 0b000111
-  Condition: 0000
+  Condition: 0b0000
   Args:
     Dest:
       BitSize: 6
@@ -287,7 +281,7 @@ DIV:
 
 DIVI:
   Operation: 0b000111
-  Condition: 0001
+  Condition: 0b0001
   Args:
     Dest:
       BitSize: 6
@@ -325,7 +319,7 @@ FX_DIVI:
 
 AND:
   Operation: 0b001000
-  Condition: 0000
+  Condition: 0b0000
   Args:
     Dest:
       BitSize: 6
@@ -339,7 +333,7 @@ AND:
 
 ANDI:
   Operation: 0b001000
-  Condition: 0001
+  Condition: 0b0001
   Args:
     Dest:
       BitSize: 6
@@ -351,7 +345,7 @@ ANDI:
 
 NAND:
   Operation: 0b001001
-  Condition: 0000
+  Condition: 0b0000
   Args:
     Dest:
       BitSize: 6
@@ -365,7 +359,7 @@ NAND:
 
 NANDI:
   Operation: 0b001001
-  Condition: 0001
+  Condition: 0b0001
   Args:
     Dest:
       BitSize: 6
@@ -377,7 +371,7 @@ NANDI:
 
 OR:
   Operation: 0b001010
-  Condition: 0000
+  Condition: 0b0000
   Args:
     Dest:
       BitSize: 6
@@ -391,7 +385,7 @@ OR:
 
 ORI:
   Operation: 0b001010
-  Condition: 0001
+  Condition: 0b0001
   Args:
     Dest:
       BitSize: 6
@@ -403,7 +397,7 @@ ORI:
 
 XOR:
   Operation: 0b001011
-  Condition: 0000
+  Condition: 0b0000
   Args:
     Dest:
       BitSize: 6
@@ -417,7 +411,7 @@ XOR:
 
 XORI:
   Operation: 0b001011
-  Condition: 0001
+  Condition: 0b0001
   Args:
     Dest:
       BitSize: 6
@@ -429,7 +423,7 @@ XORI:
 
 LSL:
   Operation: 0b001100
-  Condition: 0000
+  Condition: 0b0000
   Args:
     Dest:
       BitSize: 6
@@ -443,7 +437,7 @@ LSL:
 
 LSLI:
   Operation: 0b001100
-  Condition: 0001
+  Condition: 0b0001
   Args:
     Dest:
       BitSize: 6
@@ -455,7 +449,7 @@ LSLI:
 
 LSR:
   Operation: 0b001100
-  Condition: 0010
+  Condition: 0b0010
   Args:
     Dest:
       BitSize: 6
@@ -469,7 +463,7 @@ LSR:
 
 LSRI:
   Operation: 0b001100
-  Condition: 0011
+  Condition: 0b0011
   Args:
     Dest:
       BitSize: 6
@@ -481,7 +475,7 @@ LSRI:
 
 RSR:
   Operation: 0b001100
-  Condition: 0100
+  Condition: 0b0100
   Args:
     Dest:
       BitSize: 6
@@ -495,7 +489,7 @@ RSR:
 
 RSRI:
   Operation: 0b001100
-  Condition: 0101
+  Condition: 0b0101
   Args:
     Dest:
       BitSize: 6
@@ -507,7 +501,7 @@ RSRI:
 
 NOT:
   Operation: 0b001111
-  Condition: 0000
+  Condition: 0b0000
   Args:
     Dest:
       BitSize: 6
