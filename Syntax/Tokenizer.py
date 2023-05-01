@@ -125,9 +125,9 @@ class Tokenizer:
                 continue
             elif any(map(lambda x: x.GetName() == ParameterNoComma, Labels)):
                 if Op == 'B':
-                    Parameters.append(Map[ParameterNoComma])
-                elif Op == 'BRUH':
                     Parameters.append(Map[ParameterNoComma] - Offset[0])
+                else:
+                    Parameters.append(Map[ParameterNoComma])
                 continue
             # Erroneous parameter; raise exception.
             raise Exception(f'Parameter "{Parameter}" is nonsense!')
