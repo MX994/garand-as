@@ -7,10 +7,12 @@ class Tokenizer:
         Head = None
         Curr = None
         Labels = []
+        LabelOffsetMap = {}
         LineNo = 1
+        Offset = [0]
         for Line in Data:
             try:
-                NewNode = Tokenizer.TokenizeLine(Line, Opcodes, Conditions, Labels)
+                NewNode = Tokenizer.TokenizeLine(Line, Opcodes, Conditions, Labels, Offset, LabelOffsetMap)
                 if Head == None:
                     Head = NewNode
                 else:
@@ -24,7 +26,7 @@ class Tokenizer:
     
     @staticmethod
     # Naively tokenize string.
-    def TokenizeLine(String, Opcodes : dict, Conditions, Labels):
+    def TokenizeLine(String, Opcodes : dict, Conditions, Labels, Offset, Map):
         if len(String) == 0 or String == '\n':
             # Empty string; no tokens.
             return SyntaxComment()
@@ -37,7 +39,9 @@ class Tokenizer:
             return SyntaxComment()
         if PossibleTokens[0] == 'def':
             # Label.
-            Labels.append(PossibleTokens[1])
+            Node = SyntaxLabel(PossibleTokens[1])
+            Labels.append(Node.GetData())
+            Map[Node.GetData().GetName()] = Offset[0]
             return SyntaxLabel(PossibleTokens[1])
         
         # Likely a command. Try to parse it.     
@@ -90,16 +94,18 @@ class Tokenizer:
                     raise Exception(f'No idea what immediate "{ParameterNoComma}" is.')
                 Parameters.append(int(ParameterNoComma[1:]))
                 continue
-            elif ParameterNoComma in Labels:
+            elif any(map(lambda x: x.GetName() == ParameterNoComma, Labels)):
+                Parameters.append(Map[ParameterNoComma])
+                print(Map[ParameterNoComma])
                 continue
             # Erroneous parameter; raise exception.
             raise Exception(f'Parameter "{Parameter}" is nonsense!')
 
         CommandData = Opcodes[Op]
-
         ExpectedParameterCnt = len(CommandData['Args'])
         ActualParameterCnt = len(Parameters)
 
         if ActualParameterCnt != ExpectedParameterCnt:
             raise Exception(f'Expected {ExpectedParameterCnt} parameters, got {ActualParameterCnt}')
+        Offset[0] += 4
         return SyntaxCommand(CommandData['Operation'], CommandData['Condition'] if CondCode == None else CondCode, CommandData['Args'], Parameters)

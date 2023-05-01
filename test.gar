@@ -1,7 +1,7 @@
 # Welcome to CHIP WEEMS
 
-def _start
     ADDI R0, R0, #255
+def _start
     XOR R1, R1, R1 
     MREAD R1, R1, R1
     ADDI R2, R0, #3
