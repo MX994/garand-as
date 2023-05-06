@@ -4,7 +4,7 @@ import sys
 
 class Tokenizer:
     @staticmethod
-    def Tokenize(Data, Opcodes : dict, Conditions):
+    def Tokenize(Data: list[str], Opcodes : dict, Conditions):
         Head = None
         Curr = None
         Labels = []
@@ -23,11 +23,26 @@ class Tokenizer:
             except Exception as e:
                 print(f'Error (Line {LineNo}): {e}')
                 sys.exit(1)
+        # Post processing: Compute the label address
+        ScanNode = Head
+        while ScanNode != None:
+            if isinstance(ScanNode, SyntaxCommand):
+                data: Command = ScanNode.GetData()
+                NewParam = []
+                for p in data.GetParameters():
+                    if isinstance(p, Label):
+                        p: Label
+                        print("Updating label", p.GetName())
+                        NewParam.append(LabelOffsetMap[p.GetName()] - p.GetRelative())
+                    else:
+                        NewParam.append(p)
+                ScanNode.GetData().Parameters = NewParam
+            ScanNode = ScanNode.GetNext()
         return Head
     
     @staticmethod
     # Naively tokenize string.
-    def TokenizeLine(String, Opcodes : dict, Conditions, Labels, Offset, Map):
+    def TokenizeLine(String: str, Opcodes : dict, Conditions, Labels, Offset, Map):
         if len(String) == 0 or String == '\n':
             # Empty string; no tokens.
             return SyntaxComment()
@@ -123,11 +138,11 @@ class Tokenizer:
                     raise Exception(f'No idea what immediate "{ParameterNoComma}" is.')
                 Parameters.append(int(ParameterNoComma[1:]))
                 continue
-            elif any(map(lambda x: x.GetName() == ParameterNoComma, Labels)):
+            else:
                 if Op == 'B':
-                    Parameters.append(Map[ParameterNoComma] - Offset[0])
+                    Parameters.append(Label(ParameterNoComma, Offset[0]))
                 else:
-                    Parameters.append(Map[ParameterNoComma])
+                    Parameters.append(Label(ParameterNoComma))
                 continue
             # Erroneous parameter; raise exception.
             raise Exception(f'Parameter "{Parameter}" is nonsense!')
