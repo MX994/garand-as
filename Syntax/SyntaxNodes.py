@@ -18,5 +18,9 @@ class SyntaxLabel(INode):
         super().__init__(Node.Label, Label(Name))
 
 class SyntaxRaw(INode):
-    def __init__(self, Bytes):
+    def __init__(self, Bytes, Offset=-1):
         super().__init__(Node.Raw, Raw(Bytes))
+        self.Offset = Offset
+    
+    def GetOffset(self):
+        return self.Offset

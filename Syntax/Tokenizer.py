@@ -83,11 +83,19 @@ class Tokenizer:
             # Raw byte
             if PossibleTokens[1][1:].isnumeric():
                 # Immediate syntax
-                return SyntaxRaw(pack('L', int(PossibleTokens[1][1:])))
+                return SyntaxRaw(pack('I', int(PossibleTokens[1][1:])))
             elif PossibleTokens[1][0:2] == '0x':
                 # hex
-                return SyntaxRaw(pack('L', int(PossibleTokens[1], 16)))
+                return SyntaxRaw(pack('I', int(PossibleTokens[1], 16)))
             raise Exception('Invalid literal for raw directive.')
+        if PossibleTokens[0] == '.incbin':
+            if len(PossibleTokens) != 3:
+                raise Exception('Need to specify all three parameters for incbin!')
+            with open(PossibleTokens[1].strip("'"), 'rb') as RAWBuf:
+                if PossibleTokens[2][1:].isnumeric():
+                    return SyntaxRaw(RAWBuf.read(), int(PossibleTokens[2], 10))
+                elif PossibleTokens[2][0:2] == '0x':
+                    return SyntaxRaw(RAWBuf.read(), int(PossibleTokens[2], 16))
         # Likely a command. Try to parse it.     
         CommandNames = list(Opcodes.keys())
 

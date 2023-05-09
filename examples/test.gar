@@ -1,0 +1,9 @@
+# Welcome to CHIP WEEMS
+
+def _start
+    ADDI R0, R0, #255
+def _start2
+    SUBI R0, R0, #1
+    ADDI R2, R0, #3
+    CMPI R0, #0
+    B.GE _start2

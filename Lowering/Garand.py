@@ -4,7 +4,6 @@ from Enums.Types import Node
 
 class Garand:
     def __init__(self, Defs):
-        self.Offset = 0
         self.Buffer = b''
         self.Defs = Defs
         return
@@ -21,21 +20,28 @@ class Garand:
                 # Serialize command.
                 self.Buffer += Curr.GetData().Serialize()
             case Node.Raw:
-                self.Buffer += Curr.GetData().GetBytes()
+                Offs = Curr.GetOffset()
+                if Offs != -1:
+                    PreBuff = self.Buffer[0:Offs]
+                    if len(PreBuff) < Offs:
+                        # Pad to size
+                        PreBuff += b'\x00' * (Offs - len(PreBuff)) 
+                    NewBuf = Curr.GetData().GetBytes()
+                    PostBuff = self.Buffer[Offs + len(NewBuf):]
+                    self.Buffer = PreBuff + NewBuf + PostBuff
         return
     
     def LowerNodeList(self, Head : INode):
-        self.Offset = 0
         Curr = Head
         while Curr != None:
             # Lower current node.
             self.LowerNode(Curr)
             # Prepare for next iteration.
-            match Curr.GetKind():
-                case Node.Raw:
-                    self.Offset += len(Curr.GetData().GetBytes())
-                case _:
-                    self.Offset += 4
+            # match Curr.GetKind():
+            #     case Node.Raw:
+            #         self.Offset += len(Curr.GetData().GetBytes())
+            #     case Node.Command:
+            #         self.Offset += 4
             Curr = Curr.GetNext()
         return
     
