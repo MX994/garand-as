@@ -1,0 +1,67 @@
+# Exchange Sort
+
+# Array length
+ADDI R0, R0, #100
+
+# Used for array of size 10000
+# MUL R0, R0, R0
+
+# Outer loop counter
+XOR R1, R1, R1
+
+# Outer loop limit
+SUBI R2, R0, #1
+
+# Inner loop counter
+XOR R3, R3, R3
+
+# Inner loop limit
+SUBI R4, R0, #1
+
+# Starting memory address
+ADDI R5, R5, #255
+ADDI R5, R5, #1
+
+# Memory offset
+ADDI R6, R6, #8
+
+def outer_loop
+    CMP R1, R2
+    B.EQ end_loop
+
+    ADDI R3, R1, #0
+
+    # Temp value for outer loop counter used in other labels
+    ADD R12, R1, R15
+    ADDI R1, R1 #1
+
+    B.AL inner_loop
+
+def inner_loop
+    CMP R3, R4
+    B.EQ outer_loop
+
+    ADDI R3, R3, #1
+
+    MUL R7, R12, R6
+    MREAD R8, R5, R7
+
+    MUL R7, R3, R6
+    MREAD R9, R5, R7
+
+    CMP R9, R8
+    B.LT swap
+    B.AL inner_loop
+
+def swap
+    # No need to calculate offset since it should already be set
+    MWRITE R8, R5, R7
+
+    # Get offset for first val
+    MUL R7, R12, R6
+    MWRITE R9, R5, R7
+
+    B.AL inner_loop
+
+def end_loop
+    ADDI R15, R15, #50
