@@ -91,3 +91,5 @@ def write
 
 def end_loop
     ADDI R0, R0, #255
+
+.incbin 'matrix_multiply.rdata' 0x100
