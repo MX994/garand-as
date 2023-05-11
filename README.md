@@ -14,6 +14,10 @@
 
 ## Examples
 
+### test.gar
+
+Label & branch testing program.
+
 ### Fibb.gar
 
 Generating Fibonacci sequence and write it to the memory.
@@ -22,6 +26,8 @@ Generating Fibonacci sequence and write it to the memory.
 
 This program will perform memory copy. With graphic buffer turning on,
 an image will be rendered.
+First, generate image data by calling `img-mk.py chip.png chip.bin`,
+then assemble `chip.gar`
 
 ### Exchange sort
 
