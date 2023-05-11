@@ -1,0 +1,95 @@
+# Array/matrix length
+ADDI R0, R0, #16
+
+# Row/Col length
+ADDI R1, R1, #4
+
+# Outer loop - handles first matrix (more or less) (goes to R0) - Y
+XOR R2, R2, R2
+
+# Inner loop - handles second matrix (more or less)
+XOR R3, R3, R3
+
+# Inner inner loop
+XOR R4, R4, R4
+
+# Starting memory address
+ADDI R5, R5, #255
+ADDI R5, R5, #1
+
+# Size of buffer, given size
+MULI R6, R0, #8
+
+# First matrix location
+ADD R7, R5, R15
+
+# Second matrix location - leave 16 byte buffer between for clarity
+ADD R8, R7, R6
+ADDI R8, R8, #16
+
+# Output matrix location - leave 16 byte buffer between for clarity
+ADD R9, R8, R6
+ADDI R9, R9, #16
+
+# R5 and R6 can be overwritten now
+
+def outer_loop
+    CMP R2, R1
+    B.EQ end_loop
+
+    XOR R3, R3, R3
+
+    B.AL inner_loop
+
+def outer_inc
+    ADDI R2, R2, #1
+    B.AL outer_loop
+
+def inner_loop
+    CMP R3, R1
+    B.EQ outer_inc
+
+    XOR R4, R4, R4
+
+    B.AL inner_inner
+
+def inner_inc
+    ADDI R3, R3, #1
+    B.AL inner_loop
+
+def inner_inner
+    CMP R4, R1
+    B.EQ write
+
+    # Get index of next int in first matrix
+    MUL R10, R2, R1
+    ADD R10, R10, R4
+    MULI R10, R10, #8
+    MREAD R11, R7, R10
+
+    # Get index of next int in second matrix
+    MUL R10, R4, R1
+    ADD R10, R10, R3
+    MULI R10, R10, #8
+    MREAD R12, R8, R10
+
+    MADD R13, R11, R12
+
+    ADDI R4, R4, #1
+
+    B.AL inner_inner
+
+def write
+    # Get offset of output location
+    MUL R14, R2, R1
+    ADD R14, R14, R3
+    MULI R14, R14, #8
+    MWRITE R13, R9, R14
+
+    XOR R13, R13, R13
+    B.AL inner_inc
+
+def end_loop
+    ADDI R0, R0, #255
+
+.incbin 'matrix_multiply.rdata' 0x100
