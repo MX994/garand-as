@@ -35,5 +35,4 @@ class Command(IStructure):
                 LastBitStart -= Typing
                 MaskedVal = self.Parameters[Index] & (2**Typing - 1)
                 CommandBase |= MaskedVal << LastBitStart
-        print(pack('L', CommandBase))
-        return pack('L', CommandBase)
+        return pack('I', CommandBase)

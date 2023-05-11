@@ -1,0 +1,37 @@
+    # Temporary Zero reg
+    XOR     R0, R0, R0
+    # Counter
+    ADDI    R2, R0, #1
+    # Maximum
+    ADDI    R1, R0, #30
+    ADDI    R4, R0, #1
+    LSL     R4, R4, R1
+    # Base address
+    ADDI    R3, R0, #1
+    ADDI    R1, R0, #12
+    LSL     R3, R3, R1
+    # Previous value
+    ADDI    R5, R0, #0
+
+def begin_loop
+    CMP     R2, R4
+    B.HS    end_loop
+    MWRITE  R2, R3, R0
+    ADDI    R3, R3, #8
+    # Swap
+    ADDI    R1, R2, #0
+    ADD     R2, R2, R5
+    ADDI    R5, R1, #0
+    B.AL    begin_loop
+
+def end_loop
+    ADDI    R2, R0, #0
+    XOR     R0, R0, R0
+    XOR     R0, R0, R0
+    XOR     R0, R0, R0
+    XOR     R0, R0, R0
+    XOR     R0, R0, R0
+    XOR     R0, R0, R0
+    XOR     R0, R0, R0
+    XOR     R0, R0, R0
+    XOR     R0, R0, R0

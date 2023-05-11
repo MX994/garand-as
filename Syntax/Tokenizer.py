@@ -4,7 +4,7 @@ import sys
 
 class Tokenizer:
     @staticmethod
-    def Tokenize(Data, Opcodes : dict, Conditions):
+    def Tokenize(Data: list[str], Opcodes : dict, Conditions):
         Head = None
         Curr = None
         Labels = []
@@ -23,11 +23,26 @@ class Tokenizer:
             except Exception as e:
                 print(f'Error (Line {LineNo}): {e}')
                 sys.exit(1)
+        # Post processing: Compute the label address
+        ScanNode = Head
+        while ScanNode != None:
+            if isinstance(ScanNode, SyntaxCommand):
+                data: Command = ScanNode.GetData()
+                NewParam = []
+                for p in data.GetParameters():
+                    if isinstance(p, Label):
+                        p: Label
+                        print("Updating label", p.GetName())
+                        NewParam.append(LabelOffsetMap[p.GetName()] - p.GetRelative())
+                    else:
+                        NewParam.append(p)
+                ScanNode.GetData().Parameters = NewParam
+            ScanNode = ScanNode.GetNext()
         return Head
     
     @staticmethod
     # Naively tokenize string.
-    def TokenizeLine(String, Opcodes : dict, Conditions, Labels, Offset, Map):
+    def TokenizeLine(String: str, Opcodes : dict, Conditions, Labels, Offset, Map):
         if len(String) == 0 or String == '\n':
             # Empty string; no tokens.
             return SyntaxComment()
@@ -68,11 +83,19 @@ class Tokenizer:
             # Raw byte
             if PossibleTokens[1][1:].isnumeric():
                 # Immediate syntax
-                return SyntaxRaw(pack('L', int(PossibleTokens[1][1:])))
+                return SyntaxRaw(pack('I', int(PossibleTokens[1][1:])))
             elif PossibleTokens[1][0:2] == '0x':
                 # hex
-                return SyntaxRaw(pack('L', int(PossibleTokens[1], 16)))
+                return SyntaxRaw(pack('I', int(PossibleTokens[1], 16)))
             raise Exception('Invalid literal for raw directive.')
+        if PossibleTokens[0] == '.incbin':
+            if len(PossibleTokens) != 3:
+                raise Exception('Need to specify all three parameters for incbin!')
+            with open(PossibleTokens[1].strip("'"), 'rb') as RAWBuf:
+                if PossibleTokens[2][1:].isnumeric():
+                    return SyntaxRaw(RAWBuf.read(), int(PossibleTokens[2], 10))
+                elif PossibleTokens[2][0:2] == '0x':
+                    return SyntaxRaw(RAWBuf.read(), int(PossibleTokens[2], 16))
         # Likely a command. Try to parse it.     
         CommandNames = list(Opcodes.keys())
 
@@ -123,11 +146,11 @@ class Tokenizer:
                     raise Exception(f'No idea what immediate "{ParameterNoComma}" is.')
                 Parameters.append(int(ParameterNoComma[1:]))
                 continue
-            elif any(map(lambda x: x.GetName() == ParameterNoComma, Labels)):
+            else:
                 if Op == 'B':
-                    Parameters.append(Map[ParameterNoComma] - Offset[0])
+                    Parameters.append(Label(ParameterNoComma, Offset[0]))
                 else:
-                    Parameters.append(Map[ParameterNoComma])
+                    Parameters.append(Label(ParameterNoComma))
                 continue
             # Erroneous parameter; raise exception.
             raise Exception(f'Parameter "{Parameter}" is nonsense!')
