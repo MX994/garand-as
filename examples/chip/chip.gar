@@ -2,11 +2,11 @@
 # If this works, we get an A.
 # Right?
 
-# Destination Address Register (1 << 12 = 2^12)
+# Destination Address Register 0x2000 (1 << 13 = 2^13)
     XOR     R0, R0, R0
     ADDI    R0, R0, #1
     XOR     R4, R4, R4
-    ADDI    R4, R4, #12
+    ADDI    R4, R4, #13
     LSL     R0, R0, R4
 # Pixel Buffer Address (0x90000)
     XOR     R1, R1, R1
@@ -14,6 +14,15 @@
     XOR     R4, R4, R4
     ADDI    R4, R4, #12
     LSL     R1, R1, R4
+# Set output buffer at 0x1000
+    XOR     R2, R2, R2
+    ADDI    R2, R2, #1
+    XOR     R4, R4, R4
+    ADDI    R4, R4, #12
+    LSL     R2, R2, R4
+    XOR     R5, R5, R5
+    MWRITE  R0, R2, R5
+
 # Pixel Buffer Size
     XOR     R2, R2, R2
     ADDI    R2, R2, #255
@@ -27,7 +36,7 @@ def begin_loop
     # Check if we are at the end of the buffer.
     # If so, go to end.
     CMP     R2, R3
-    B.HS    end_loop
+    B.LO    end_loop
     # Else, write.
     # Gonna use R4 as Wk register.
     MREAD   R4, R1, R3
